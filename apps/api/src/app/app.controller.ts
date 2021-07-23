@@ -27,6 +27,7 @@ export class AppController {
     return req.user;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('categories')
   async getCategories(): Promise<Category[]> {
     return this.sequelize.query<Category>('SELECT * FROM categories', {
@@ -36,6 +37,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('categories/:categoryId')
   async deleteCategory(@Param('categoryId') categoryId): Promise<void> {
     await this.sequelize.query('DELETE FROM categories WHERE id=:id', {
@@ -44,6 +46,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('categories')
   async postCategory(@Body() createDto: CategoryDto): Promise<void> {
     await this.sequelize.query('INSERT INTO categories (name) VALUES (:name)', {
@@ -52,6 +55,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('categories/:categoryId')
   async putCategory(
     @Param('categoryId') categoryId,
@@ -66,6 +70,7 @@ export class AppController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('products')
   async getProducts(): Promise<Product[]> {
     return Promise.all([
@@ -90,6 +95,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('products/:productId')
   async deleteProduct(@Param('productId') productId): Promise<void> {
     await this.sequelize.query('DELETE FROM products WHERE id=:id', {
@@ -98,6 +104,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('products')
   async postProduct(@Body() createDto: ProductDto): Promise<void> {
     await this.sequelize.query(`INSERT INTO products (name, price, expirationDate, categoryId)
@@ -112,6 +119,7 @@ export class AppController {
     });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('products/:productId')
   async putProduct(
     @Param('productId') productId,
